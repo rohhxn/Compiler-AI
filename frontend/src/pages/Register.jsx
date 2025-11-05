@@ -35,7 +35,8 @@ export default function Register() {
       alert('Registered successfully ✅');
       navigate('/login');
     } catch (err) {
-      alert('Registration failed ❌');
+      const errorMessage = err.response?.data?.message || err.response?.data?.errors?.[0]?.defaultMessage || 'Registration failed';
+      alert(`Registration failed ❌\n${errorMessage}`);
     }
   };
 

@@ -35,7 +35,8 @@ export default function Login() {
 
       navigate(user.role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
-      alert("Login failed ❌");
+      const errorMessage = err.response?.data?.message || 'Invalid email or password';
+      alert(`Login failed ❌\n${errorMessage}`);
     } finally {
       setLoading(false);
       console.timeEnd("LoginTime");
