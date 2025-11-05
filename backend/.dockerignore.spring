@@ -1,0 +1,41 @@
+# Maven wrapper
+mvnw
+mvnw.cmd
+.mvn/
+
+# Target directory
+target/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Old Node.js files (to be removed)
+node_modules/
+package.json
+package-lock.json
+server.js
+rough.txt
+
+# Old structure (to be removed)
+config/
+controllers/
+middleware/
+models/
+routes/
+
+# Logs
+*.log
+
+# Environment
+.env.local
+.env.development
+.env.test
