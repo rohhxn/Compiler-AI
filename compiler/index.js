@@ -8,6 +8,17 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Compiler service is running 🚀',
+    status: 'healthy',
+    endpoints: {
+      run: 'POST /run - Execute code'
+    }
+  });
+});
+
 app.post('/run', async (req, res) => {
   const { language, code, input } = req.body;
   try {
