@@ -25,7 +25,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Count accepted submissions
-        List<Submission> submissions = submissionRepository.findByUserId(userId);
+        List<Submission> submissions = submissionRepository.findByUserIdOrderByCreatedAtDesc(userId);
         long totalSolved = submissions.stream()
                 .filter(s -> "Accepted".equals(s.getVerdict()))
                 .map(Submission::getProblemId)
