@@ -23,12 +23,18 @@ public class ProblemController {
     private ProblemService problemService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createProblem(
             @Valid @RequestBody ProblemRequest request,
             HttpServletRequest httpRequest) {
         try {
             String userId = (String) httpRequest.getAttribute("userId");
+            String role = (String) httpRequest.getAttribute("role");
+            
+            if (!"admin".equals(role)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Only admins can create problems"));
+            }
+            
             Problem problem = problemService.createProblem(request, userId);
             return ResponseEntity.status(HttpStatus.CREATED).body(problem);
         } catch (Exception e) {
@@ -65,11 +71,18 @@ public class ProblemController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateProblem(
             @PathVariable String id,
-            @Valid @RequestBody ProblemRequest request) {
+            @Valid @RequestBody ProblemRequest request,
+            HttpServletRequest httpRequest) {
         try {
+            String role = (String) httpRequest.getAttribute("role");
+            
+            if (!"admin".equals(role)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Only admins can update problems"));
+            }
+            
             Problem updated = problemService.updateProblem(id, request);
             return ResponseEntity.ok(updated);
         } catch (Exception e) {
@@ -81,9 +94,15 @@ public class ProblemController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteProblem(@PathVariable String id) {
+    public ResponseEntity<?> deleteProblem(@PathVariable String id, HttpServletRequest httpRequest) {
         try {
+            String role = (String) httpRequest.getAttribute("role");
+            
+            if (!"admin".equals(role)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Only admins can delete problems"));
+            }
+            
             problemService.deleteProblem(id);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Problem deleted successfully");
