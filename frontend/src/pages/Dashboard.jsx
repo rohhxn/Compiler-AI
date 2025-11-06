@@ -76,10 +76,10 @@ export default function Dashboard() {
         </thead>
         <tbody>
           {problems.map((problem) => (
-            <tr key={problem._id} className="border-t hover:bg-gray-50">
+            <tr key={problem.id} className="border-t hover:bg-gray-50">
               <td className="py-2 px-4">
                 <Link
-                  to={`/problems/${problem._id}`}
+                  to={`/problems/${problem.id}`}
                   className="text-blue-600 hover:underline"
                 >
                   {problem.title}
